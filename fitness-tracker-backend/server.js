@@ -6,6 +6,10 @@ const authRoutes = require('./routes/authRoutes');
 const workoutRoutes = require('./routes/workoutRoutes');
 const nutritionRoutes = require('./routes/nutritionRoutes');
 const progressRoutes = require('./routes/progressRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
+const exportRoutes = require('./routes/exportRoutes');
 
 
 // App Config
@@ -17,6 +21,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/workouts', workoutRoutes);
 app.use('/api/nutrition', nutritionRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/analytics', analyticsRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/export', exportRoutes);
 
 // DB Config
 mongoose.connect(process.env.MONGO_URI, {

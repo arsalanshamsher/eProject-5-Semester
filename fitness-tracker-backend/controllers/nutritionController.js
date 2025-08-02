@@ -38,8 +38,30 @@ const deleteNutritionLog = async (req, res) => {
   }
 };
 
+const searchNutrition = async (req, res) => {
+  try {
+    const { keyword, mealType } = req.query;
+
+    const query = { user: req.user._id };
+
+    if (keyword) {
+      query['entries.food'] = { $regex: keyword, $options: 'i' };
+    }
+
+    if (mealType) {
+      query.mealType = mealType; // breakfast/lunch/dinner/snacks
+    }
+
+    const logs = await Nutrition.find(query).sort({ createdAt: -1 });
+    res.json(logs);
+  } catch (err) {
+    res.status(500).json({ message: 'Nutrition search failed' });
+  }
+};
+
 module.exports = {
   addNutrition,
   getNutritionLogs,
-  deleteNutritionLog
+  deleteNutritionLog,
+  searchNutrition,
 };
