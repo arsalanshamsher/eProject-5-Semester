@@ -686,3 +686,8 @@ body::before {
   }
 }
 
+
+.signup-form,.login-form input{
+color: black !important;
+
+  }
