@@ -5,13 +5,15 @@ const Nutrition = require('../models/Nutrition');
 const getWorkoutAnalytics = async (req, res) => {
   try {
     const userId = req.user._id;
+    console.log(`Fetching workout analytics for user: ${userId}`);
+    
 
     // Get workout count per day (last 7 days)
     const workouts = await Workout.aggregate([
       { $match: { user: userId } },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
           count: { $sum: 1 }
         }
       },
@@ -28,16 +30,16 @@ const getNutritionAnalytics = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    // Group by date and sum calories/macros
     const nutrition = await Nutrition.aggregate([
       { $match: { user: userId } },
+      { $unwind: "$items" }, // items array ko tod do
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
-          totalCalories: { $sum: "$calories" },
-          totalProtein: { $sum: "$protein" },
-          totalCarbs: { $sum: "$carbs" },
-          totalFats: { $sum: "$fats" }
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          totalCalories: { $sum: "$items.calories" },
+          totalProtein: { $sum: "$items.protein" },
+          totalCarbs: { $sum: "$items.carbs" },
+          totalFats: { $sum: "$items.fat" }
         }
       },
       { $sort: { _id: 1 } }

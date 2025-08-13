@@ -23,12 +23,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { saveToken } from "../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   if (!isOpen) return null;
 
   const handleLogin = async (e) => {
@@ -52,6 +53,8 @@ const LoginModal = ({ isOpen, onClose }) => {
 
       // Close modal
       onClose();
+      // Redirect to dashboard
+      navigate("/admin");
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Login failed");
