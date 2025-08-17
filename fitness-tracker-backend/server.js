@@ -10,7 +10,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const exportRoutes = require('./routes/exportRoutes');
-
+const settingsRoutes = require('./routes/settingsRoutes');
 
 // App Config
 dotenv.config();
@@ -25,6 +25,7 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/export', exportRoutes);
+app.use('/api/settings', settingsRoutes);
 
 // DB Config
 mongoose.connect(process.env.MONGO_URI, {

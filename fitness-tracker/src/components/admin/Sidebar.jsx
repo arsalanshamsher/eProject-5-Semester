@@ -44,6 +44,15 @@ export default function Sidebar() {
         <Link to="/admin/user" className={linkClass("/admin/user")}>
           User Profile
         </Link>
+        <Link to="/admin/workouts" className={linkClass("/admin/workouts")}>
+          Workouts
+        </Link>
+        <Link to="/admin/nutrition" className={linkClass("/admin/nutrition")}>
+          Nutrition
+        </Link>
+        <Link to="/admin/progress" className={linkClass("/admin/progress")}>
+          Progress
+        </Link>
         <Link to="/admin/bmi" className={linkClass("/admin/bmi")}>
           BMI Calculator
         </Link>
