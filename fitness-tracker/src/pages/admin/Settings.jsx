@@ -193,24 +193,24 @@ export default function Settings() {
                     <select
                       value={value}
                       onChange={(e) => handleSettingChange('units', key, e.target.value)}
-                      className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/10 text-white"
+                      className="w-full p-3 rounded-lg text-black border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/10 text-white"
                     >
                       {key === 'weight' && (
                         <>
-                          <option value="kg">Kilograms (kg)</option>
-                          <option value="lbs">Pounds (lbs)</option>
+                          <option value="kg" className="text-black">Kilograms (kg)</option>
+                          <option value="lbs" className="text-black">Pounds (lbs)</option>
                         </>
                       )}
                       {key === 'height' && (
                         <>
-                          <option value="cm">Centimeters (cm)</option>
-                          <option value="ft">Feet & Inches (ft)</option>
+                          <option value="cm" className="text-black">Centimeters (cm)</option>
+                          <option value="ft" className="text-black">Feet & Inches (ft)</option>
                         </>
                       )}
                       {key === 'distance' && (
                         <>
-                          <option value="km">Kilometers (km)</option>
-                          <option value="mi">Miles (mi)</option>
+                          <option value="km" className="text-black">Kilometers (km)</option>
+                          <option value="mi" className="text-black">Miles (mi)</option>
                         </>
                       )}
                     </select>
@@ -232,9 +232,9 @@ export default function Settings() {
                     onChange={(e) => handleSettingChange('privacy', 'profileVisibility', e.target.value)}
                     className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/10 text-white"
                   >
-                    <option value="public">Public - Anyone can see my profile</option>
-                    <option value="friends">Friends Only - Only my friends can see</option>
-                    <option value="private">Private - Only I can see my profile</option>
+                    <option value="public" className="text-black">Public - Anyone can see my profile</option>
+                    <option value="friends" className="text-black">Friends Only - Only my friends can see</option>
+                    <option value="private" className="text-black">Private - Only I can see my profile</option>
                   </select>
                 </div>
 
@@ -254,7 +254,7 @@ export default function Settings() {
                           type="checkbox"
                           checked={value}
                           onChange={(e) => handleSettingChange('privacy', key, e.target.checked)}
-                          className="sr-only peer"
+                          className="sr-only peer text-black"
                         />
                         <div className="w-11 h-6 bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                       </label>

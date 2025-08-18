@@ -5,6 +5,7 @@ import "aos/dist/aos.css";
 const Contact = () => {
   useEffect(() => {
     AOS.init({ duration: 1000 });
+    AOS.init({ duration: 1000 });
   }, []);
 
   const [formData, setFormData] = useState({
@@ -37,22 +38,39 @@ const Contact = () => {
       setErrors({});
       setTimeout(() => {
         setShowSuccess(false);
-      }, 1000);
+      }, 2000);
     } else {
       setErrors(validationErrors);
     }
   };
 
   return (
-    <section id="contact" className="contact-section" data-aos="fade-up">
-      <div className="contact-container">
-        <h2>Get in Touch 💬</h2>
-        <p>
+    <section
+      id="contact"
+      className="relative bg-cover bg-center py-20 px-6"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1599058917212-d750089bcbe2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80')", // gym background
+      }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
+
+      <div className="relative max-w-2xl mx-auto text-center text-white">
+        <h2 className="text-4xl font-extrabold mb-4 drop-shadow-lg">
+          Get in Touch 💬
+        </h2>
+        <p className="mb-8 text-gray-200">
           We'd love to hear from you! Whether you have a question, suggestion,
           or just want to say hello.
         </p>
 
-        <form className="contact-form" onSubmit={handleSubmit} noValidate>
+        {/* Glass Form */}
+        <form
+          className="backdrop-blur-lg bg-white/10 shadow-xl rounded-2xl p-8 space-y-6 border border-white/20"
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <div>
             <input
               type="text"
@@ -61,8 +79,11 @@ const Contact = () => {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              className="w-full p-3 rounded-lg bg-white/80 text-black focus:ring-2 focus:ring-green-500 outline-none shadow-md"
             />
-            {errors.name && <p className="error-text">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
 
           <div>
@@ -73,8 +94,11 @@ const Contact = () => {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              className="w-full p-3 rounded-lg bg-white/80 text-black focus:ring-2 focus:ring-green-500 outline-none shadow-md"
             />
-            {errors.email && <p className="error-text">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-400 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -85,16 +109,25 @@ const Contact = () => {
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
               }
+              className="w-full p-3 rounded-lg bg-white/80 text-black focus:ring-2 focus:ring-green-500 outline-none shadow-md"
             />
-            {errors.message && <p className="error-text">{errors.message}</p>}
+            {errors.message && (
+              <p className="text-red-400 text-sm mt-1">{errors.message}</p>
+            )}
           </div>
 
-          <button type="submit">Send Message</button>
+          <button
+            type="submit"
+            className="w-full bg-[var(--primary-400)] hover:bg-[var(--primary-main)] text-white font-semibold py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
+          >
+            Send Message
+          </button>
         </form>
 
+        {/* Success Message */}
         {showSuccess && (
-          <div className="success-message animate-fade-in">
-            Thank you for reaching out! We'll get back to you soon 🚀
+          <div className="mt-6 bg-green-600/80 backdrop-blur-md text-white p-4 rounded-lg shadow-lg animate-bounce">
+            ✅ Thank you for reaching out! We'll get back to you soon 🚀
           </div>
         )}
       </div>

@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { getToken } from '../../utils/auth';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { getToken } from "../../utils/auth";
 
 export default function Nutrition() {
   const [nutritionLogs, setNutritionLogs] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editingLog, setEditingLog] = useState(null);
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split('T')[0],
-    mealType: 'breakfast',
-    items: [{ name: '', quantity: '', calories: '', protein: '', carbs: '', fat: '' }]
+    date: new Date().toISOString().split("T")[0],
+    mealType: "breakfast",
+    items: [
+      { name: "", quantity: "", calories: "", protein: "", carbs: "", fat: "" },
+    ],
   });
 
   useEffect(() => {
@@ -19,12 +21,12 @@ export default function Nutrition() {
   const fetchNutritionLogs = async () => {
     try {
       const token = getToken();
-      const response = await axios.get('http://localhost:5000/api/nutrition', {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await axios.get("http://localhost:5000/api/nutrition", {
+        headers: { Authorization: `Bearer ${token}` },
       });
       setNutritionLogs(response.data);
     } catch (error) {
-      console.error('Error fetching nutrition logs:', error);
+      console.error("Error fetching nutrition logs:", error);
     }
   };
 
@@ -33,32 +35,36 @@ export default function Nutrition() {
     try {
       const token = getToken();
       if (editingLog) {
-        await axios.put(`http://localhost:5000/api/nutrition/${editingLog._id}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await axios.put(
+          `http://localhost:5000/api/nutrition/${editingLog._id}`,
+          formData,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
       } else {
-        await axios.post('http://localhost:5000/api/nutrition', formData, {
-          headers: { Authorization: `Bearer ${token}` }
+        await axios.post("http://localhost:5000/api/nutrition", formData, {
+          headers: { Authorization: `Bearer ${token}` },
         });
       }
       fetchNutritionLogs();
       resetForm();
       setShowForm(false);
     } catch (error) {
-      console.error('Error saving nutrition log:', error);
+      console.error("Error saving nutrition log:", error);
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this nutrition log?')) {
+    if (window.confirm("Are you sure you want to delete this nutrition log?")) {
       try {
         const token = getToken();
         await axios.delete(`http://localhost:5000/api/nutrition/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         });
         fetchNutritionLogs();
       } catch (error) {
-        console.error('Error deleting nutrition log:', error);
+        console.error("Error deleting nutrition log:", error);
       }
     }
   };
@@ -66,62 +72,84 @@ export default function Nutrition() {
   const handleEdit = (log) => {
     setEditingLog(log);
     setFormData({
-      date: new Date(log.date).toISOString().split('T')[0],
+      date: new Date(log.date).toISOString().split("T")[0],
       mealType: log.mealType,
-      items: log.items
+      items: log.items,
     });
     setShowForm(true);
   };
 
   const resetForm = () => {
     setFormData({
-      date: new Date().toISOString().split('T')[0],
-      mealType: 'breakfast',
-      items: [{ name: '', quantity: '', calories: '', protein: '', carbs: '', fat: '' }]
+      date: new Date().toISOString().split("T")[0],
+      mealType: "breakfast",
+      items: [
+        {
+          name: "",
+          quantity: "",
+          calories: "",
+          protein: "",
+          carbs: "",
+          fat: "",
+        },
+      ],
     });
     setEditingLog(null);
   };
 
   const addFoodItem = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      items: [...prev.items, { name: '', quantity: '', calories: '', protein: '', carbs: '', fat: '' }]
+      items: [
+        ...prev.items,
+        {
+          name: "",
+          quantity: "",
+          calories: "",
+          protein: "",
+          carbs: "",
+          fat: "",
+        },
+      ],
     }));
   };
 
   const removeFoodItem = (index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      items: prev.items.filter((_, i) => i !== index)
+      items: prev.items.filter((_, i) => i !== index),
     }));
   };
 
   const updateFoodItem = (index, field, value) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      items: prev.items.map((item, i) => 
+      items: prev.items.map((item, i) =>
         i === index ? { ...item, [field]: value } : item
-      )
+      ),
     }));
   };
 
   const calculateTotals = (items) => {
-    return items.reduce((totals, item) => ({
-      calories: totals.calories + (Number(item.calories) || 0),
-      protein: totals.protein + (Number(item.protein) || 0),
-      carbs: totals.carbs + (Number(item.carbs) || 0),
-      fat: totals.fat + (Number(item.fat) || 0)
-    }), { calories: 0, protein: 0, carbs: 0, fat: 0 });
+    return items.reduce(
+      (totals, item) => ({
+        calories: totals.calories + (Number(item.calories) || 0),
+        protein: totals.protein + (Number(item.protein) || 0),
+        carbs: totals.carbs + (Number(item.carbs) || 0),
+        fat: totals.fat + (Number(item.fat) || 0),
+      }),
+      { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    );
   };
 
   const getMealTypeColor = (mealType) => {
     const colors = {
-      breakfast: 'bg-orange-500',
-      lunch: 'bg-green-500',
-      dinner: 'bg-blue-500',
-      snack: 'bg-purple-500'
+      breakfast: "bg-orange-500",
+      lunch: "bg-green-500",
+      dinner: "bg-blue-500",
+      snack: "bg-purple-500",
     };
-    return colors[mealType] || 'bg-gray-500';
+    return colors[mealType] || "bg-gray-500";
   };
 
   return (
@@ -142,21 +170,25 @@ export default function Nutrition() {
       {showForm && (
         <div className="bg-white/20 backdrop-blur-md rounded-lg shadow-lg p-6 mb-6">
           <h3 className="text-2xl font-semibold mb-4 text-white">
-            {editingLog ? 'Edit Meal Log' : 'Log New Meal'}
+            {editingLog ? "Edit Meal Log" : "Log New Meal"}
           </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="date"
                 value={formData.date}
-                onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, date: e.target.value }))
+                }
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 required
               />
               <select
                 value={formData.mealType}
-                onChange={(e) => setFormData(prev => ({ ...prev, mealType: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, mealType: e.target.value }))
+                }
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="breakfast">Breakfast</option>
                 <option value="lunch">Lunch</option>
@@ -168,56 +200,71 @@ export default function Nutrition() {
             <div className="space-y-3">
               <h4 className="text-lg font-semibold text-white">Food Items</h4>
               {formData.items.map((item, index) => (
-                <div key={index} className="grid grid-cols-1 md:grid-cols-6 gap-3 p-4 bg-white/10 rounded-lg">
-                  <input
-                    type="text"
-                    placeholder="Food Name"
-                    value={item.name}
-                    onChange={(e) => updateFoodItem(index, 'name', e.target.value)}
-                    className="p-2 rounded border border-gray-300 focus:ring-2 focus:ring-green-500 col-span-2"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Quantity"
-                    value={item.quantity}
-                    onChange={(e) => updateFoodItem(index, 'quantity', e.target.value)}
-                    className="p-2 rounded border border-gray-300 focus:ring-2 focus:ring-green-500"
-                  />
-                  <input
-                    type="number"
-                    placeholder="Calories"
-                    value={item.calories}
-                    onChange={(e) => updateFoodItem(index, 'calories', e.target.value)}
-                    className="p-2 rounded border border-gray-300 focus:ring-2 focus:ring-green-500"
-                  />
-                  <div className="flex gap-2">
+                <div
+                  key={index}
+                  className="p-4 bg-white/10 rounded-xl shadow-md"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-7 gap-3 items-center">
+                    <input
+                      type="text"
+                      placeholder="Food Name"
+                      value={item.name}
+                      onChange={(e) =>
+                        updateFoodItem(index, "name", e.target.value)
+                      }
+                      className="p-3 rounded-lg border border-gray-300 bg-white text-black focus:ring-2 focus:ring-green-500 col-span-2"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder="Quantity"
+                      value={item.quantity}
+                      onChange={(e) =>
+                        updateFoodItem(index, "quantity", e.target.value)
+                      }
+                      className="p-3 rounded-lg border border-gray-300 bg-white text-black focus:ring-2 focus:ring-green-500"
+                    />
+                    <input
+                      type="number"
+                      placeholder="Calories"
+                      value={item.calories}
+                      onChange={(e) =>
+                        updateFoodItem(index, "calories", e.target.value)
+                      }
+                      className="p-3 rounded-lg border border-gray-300 bg-white text-black focus:ring-2 focus:ring-green-500"
+                    />
                     <input
                       type="number"
                       placeholder="Protein (g)"
                       value={item.protein}
-                      onChange={(e) => updateFoodItem(index, 'protein', e.target.value)}
-                      className="p-2 rounded border border-gray-300 focus:ring-2 focus:ring-green-500 flex-1"
+                      onChange={(e) =>
+                        updateFoodItem(index, "protein", e.target.value)
+                      }
+                      className="p-3 rounded-lg border border-gray-300 bg-white text-black focus:ring-2 focus:ring-green-500"
                     />
                     <input
                       type="number"
                       placeholder="Carbs (g)"
                       value={item.carbs}
-                      onChange={(e) => updateFoodItem(index, 'carbs', e.target.value)}
-                      className="p-2 rounded border border-gray-300 focus:ring-2 focus:ring-green-500 flex-1"
+                      onChange={(e) =>
+                        updateFoodItem(index, "carbs", e.target.value)
+                      }
+                      className="p-3 rounded-lg border border-gray-300 bg-white text-black focus:ring-2 focus:ring-green-500"
                     />
                     <input
                       type="number"
                       placeholder="Fat (g)"
                       value={item.fat}
-                      onChange={(e) => updateFoodItem(index, 'fat', e.target.value)}
-                      className="p-2 rounded border border-gray-300 focus:ring-2 focus:ring-green-500 flex-1"
+                      onChange={(e) =>
+                        updateFoodItem(index, "fat", e.target.value)
+                      }
+                      className="p-3 rounded-lg border border-gray-300 bg-white text-black focus:ring-2 focus:ring-green-500"
                     />
                     {formData.items.length > 1 && (
                       <button
                         type="button"
                         onClick={() => removeFoodItem(index)}
-                        className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded transition-colors"
+                        className="bg-red-500 hover:bg-red-600 text-white w-10 h-10 flex items-center justify-center rounded-full shadow transition-colors"
                       >
                         ×
                       </button>
@@ -225,10 +272,11 @@ export default function Nutrition() {
                   </div>
                 </div>
               ))}
+
               <button
                 type="button"
                 onClick={addFoodItem}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-md"
               >
                 + Add Food Item
               </button>
@@ -239,7 +287,7 @@ export default function Nutrition() {
                 type="submit"
                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
-                {editingLog ? 'Update Meal' : 'Log Meal'}
+                {editingLog ? "Update Meal" : "Log Meal"}
               </button>
               <button
                 type="button"
@@ -261,27 +309,40 @@ export default function Nutrition() {
         {nutritionLogs.map((log) => {
           const totals = calculateTotals(log.items);
           return (
-            <div key={log._id} className="bg-white/20 backdrop-blur-md rounded-lg shadow-lg p-6">
+            <div
+              key={log._id}
+              className="bg-white/20 backdrop-blur-md rounded-lg shadow-lg p-6"
+            >
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-xl font-semibold text-white">
                     {new Date(log.date).toLocaleDateString()}
                   </h3>
-                  <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium text-white mt-2 ${getMealTypeColor(log.mealType)}`}>
-                    {log.mealType.charAt(0).toUpperCase() + log.mealType.slice(1)}
+                  <span
+                    className={`inline-block px-3 py-1 rounded-full text-sm font-medium text-white mt-2 ${getMealTypeColor(
+                      log.mealType
+                    )}`}
+                  >
+                    {log.mealType.charAt(0).toUpperCase() +
+                      log.mealType.slice(1)}
                   </span>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-white">{totals.calories} cal</p>
+                  <p className="text-2xl font-bold text-white">
+                    {totals.calories} cal
+                  </p>
                   <p className="text-sm text-gray-300">
                     P: {totals.protein}g | C: {totals.carbs}g | F: {totals.fat}g
                   </p>
                 </div>
               </div>
-              
+
               <div className="space-y-2 mb-4">
                 {log.items.map((item, index) => (
-                  <div key={index} className="flex justify-between items-center text-sm text-gray-200">
+                  <div
+                    key={index}
+                    className="flex justify-between items-center text-sm text-gray-200"
+                  >
                     <span className="font-medium">{item.name}</span>
                     <span className="text-gray-400">
                       {item.quantity} • {item.calories} cal
@@ -314,7 +375,10 @@ export default function Nutrition() {
 
       {nutritionLogs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-400 text-lg">No nutrition logs found. Start logging your meals to track your nutrition!</p>
+          <p className="text-gray-400 text-lg">
+            No nutrition logs found. Start logging your meals to track your
+            nutrition!
+          </p>
         </div>
       )}
     </div>

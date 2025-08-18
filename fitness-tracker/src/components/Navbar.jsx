@@ -18,17 +18,29 @@ export default function Navbar({ onSignupClick, onLoginClick }) {
   const [active, setActive] = useState("banner");
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // ✅ Example: check login from localStorage
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user"); // you can change based on auth logic
+    setIsLoggedIn(!!user);
+  }, []);
+
   const handleClick = (id) => {
     setActive(id);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false); // Close menu on click (mobile)
   };
 
+  const handlePortalClick = () => {
+    window.location.href = "/admin";
+  };
+
   return (
     <nav className="landing-navbar">
       <img 
         src="/assets/logo.png"
-        alt="Animated GIF"
+        alt="Logo"
         className="h-20 w-30"
         style={{ backgroundColor: "transparent" }}
       />
@@ -52,23 +64,42 @@ export default function Navbar({ onSignupClick, onLoginClick }) {
             </button>
           </li>
         ))}
+
+        {/* Auth Buttons for Mobile */}
         <div className="mobile-auth">
-          <button className="btn-outline" onClick={onLoginClick}>
-            Login
-          </button>
-          <button className="btn-filled" onClick={onSignupClick}>
-            Sign Up
-          </button>
+          {!isLoggedIn ? (
+            <>
+              <button className="btn-outline" onClick={onLoginClick}>
+                Login
+              </button>
+              <button className="btn-filled" onClick={onSignupClick}>
+                Sign Up
+              </button>
+            </>
+          ) : (
+            <button className="btn-filled" onClick={handlePortalClick}>
+              Portal
+            </button>
+          )}
         </div>
       </ul>
 
+      {/* Auth Buttons for Desktop */}
       <div className="landing-navbar-auth">
-        <button className="btn-outline" onClick={onLoginClick}>
-          Login
-        </button>
-        <button className="btn-filled" onClick={onSignupClick}>
-          Sign Up
-        </button>
+        {!isLoggedIn ? (
+          <>
+            <button className="btn-outline" onClick={onLoginClick}>
+              Login
+            </button>
+            <button className="btn-filled" onClick={onSignupClick}>
+              Sign Up
+            </button>
+          </>
+        ) : (
+          <button className="btn-filled" onClick={handlePortalClick}>
+            Portal   
+          </button>
+        )}
       </div>
     </nav>
   );

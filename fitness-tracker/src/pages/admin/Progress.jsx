@@ -223,7 +223,7 @@ export default function Progress() {
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 required
               />
             </div>
@@ -235,7 +235,7 @@ export default function Progress() {
                 placeholder="Weight (kg)"
                 value={formData.weight}
                 onChange={(e) => setFormData(prev => ({ ...prev, weight: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
               <input
                 type="number"
@@ -243,7 +243,7 @@ export default function Progress() {
                 placeholder="Body Fat %"
                 value={formData.bodyFat}
                 onChange={(e) => setFormData(prev => ({ ...prev, bodyFat: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
               <input
                 type="number"
@@ -251,7 +251,7 @@ export default function Progress() {
                 placeholder="Muscle Mass (kg)"
                 value={formData.muscleMass}
                 onChange={(e) => setFormData(prev => ({ ...prev, muscleMass: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
 
@@ -262,7 +262,7 @@ export default function Progress() {
                 placeholder="Chest (cm)"
                 value={formData.chest}
                 onChange={(e) => setFormData(prev => ({ ...prev, chest: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
               <input
                 type="number"
@@ -270,7 +270,7 @@ export default function Progress() {
                 placeholder="Waist (cm)"
                 value={formData.waist}
                 onChange={(e) => setFormData(prev => ({ ...prev, waist: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
               <input
                 type="number"
@@ -278,7 +278,7 @@ export default function Progress() {
                 placeholder="Hips (cm)"
                 value={formData.hips}
                 onChange={(e) => setFormData(prev => ({ ...prev, hips: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
               <input
                 type="number"
@@ -286,7 +286,7 @@ export default function Progress() {
                 placeholder="Biceps (cm)"
                 value={formData.biceps}
                 onChange={(e) => setFormData(prev => ({ ...prev, biceps: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
               <input
                 type="number"
@@ -294,7 +294,7 @@ export default function Progress() {
                 placeholder="Thighs (cm)"
                 value={formData.thighs}
                 onChange={(e) => setFormData(prev => ({ ...prev, thighs: e.target.value }))}
-                className="p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
             </div>
 
@@ -302,7 +302,7 @@ export default function Progress() {
               placeholder="Notes (optional)"
               value={formData.notes}
               onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full p-3 rounded-lg border border-gray-300 text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               rows="3"
             />
 
